@@ -8,14 +8,14 @@ from sqlalchemy import String, Boolean, Column, Integer, ForeignKey, TIMESTAMP
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
-from currency_exchange.config import (
+from config import (
     DB_USERNAME,
     DB_PASSWORD,
     DB_HOSTNAME,
     DB_PORT,
     DB_NAME,
 )
-from currency_exchange.models.models import role
+from models.models import role
 
 DATABASE_URL = f"postgresql+asyncpg://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOSTNAME}:{DB_PORT}/{DB_NAME}"
 
