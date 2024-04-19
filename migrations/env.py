@@ -12,7 +12,7 @@ from currency_exchange.config import (
     DB_NAME,
     DB_PORT,
 )
-from currency_exchange.src.models.models import metadata
+from currency_exchange.models.models import metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
