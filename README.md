@@ -2,8 +2,9 @@ Currency XChange API
 
 Stack
 =====
-* Fastapi
+* FastAPI
 * SQLAlchemy
+* FastAPI Users
 * Alembic
 * psycopg2 (PostgreSQL)
 
