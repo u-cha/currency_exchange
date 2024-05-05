@@ -6,7 +6,7 @@ from auth.database import User
 from auth.manager import get_user_manager
 from auth.schemas import UserRead, UserCreate
 
-from operations.router import currencies_router
+from operations.router import currencies_router, currency_router
 
 fastapi_users = FastAPIUsers[User, int](
     get_user_manager,
@@ -30,6 +30,7 @@ app.include_router(
 )
 
 app.include_router(currencies_router)
+app.include_router(currency_router)
 
 
 @app.get("/currency")
