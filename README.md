@@ -8,6 +8,12 @@ Stack
 * FastAPI Users
 * Alembic
 * psycopg2/asyncpg (PostgreSQL)
+* Poetry dependency management
+
+Minor usage
+===========
+* httpx is used to make requests to third-party resources
+* BeautifulSoup4 is used to extract currency codes from IBAN web page
 
 Role Model
 ==========
