@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import FastAPI, Depends
 from fastapi_users import FastAPIUsers
 
@@ -6,7 +8,7 @@ from auth.database import User
 from auth.manager import get_user_manager
 from auth.schemas import UserRead, UserCreate
 
-from operations.router import currencies_router, currency_router
+from currencies.router import currencies_router, currency_router
 
 fastapi_users = FastAPIUsers[User, int](
     get_user_manager,
@@ -15,6 +17,9 @@ fastapi_users = FastAPIUsers[User, int](
 
 current_user = fastapi_users.current_user()
 
+logging.basicConfig(
+    level=logging.INFO, format=f"\033[1;91m%(asctime)s - \033[1;33m%(name)s - \033[0m%(levelname)s - %(message)s"
+)
 
 app = FastAPI()
 app.include_router(
@@ -33,6 +38,6 @@ app.include_router(currencies_router)
 app.include_router(currency_router)
 
 
-@app.get("/currency")
-def protected_route(user: User = Depends(current_user)):
-    return f"Hello, {user.email}"
+# @app.get("/currency")
+# def protected_route(user: User = Depends(current_user)):
+#     return f"Hello, {user.email}"
