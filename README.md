@@ -4,14 +4,13 @@ Currency exchange REST API.
 Implements CRUD operations for currencies, currency exchange rates. You can get/post
 currencies/exchange rates. You can convert currencies.
 
-## Endpoint currently available:
+### Endpoints currently available:  
 
-GET currencies/ - returns a list of available currencies.
-GET currency/<currency code> - return concrete currency if it exists.
-POST currencies/ - posts a new currency or returns code 409 if it exists already.
+GET currencies/ - returns a list of available currencies.  
+GET currency/<currency code> - return concrete currency if it exists.  
+POST currencies/ - posts a new currency or returns code 409 if it exists already.  
 
-Stack
-=====
+# Stack
 
 * FastAPI
 * SQLAlchemy
@@ -20,14 +19,12 @@ Stack
 * psycopg2/asyncpg (PostgreSQL)
 * Poetry dependency management
 
-Minor usage
-===========
-
+###  Minor usage
 * httpx is used to make requests to third-party resources
 * BeautifulSoup4 is used to extract currency codes from IBAN web page
 
-Role Model
-==========
+# Role Model
+(not implemented yet)
 
 * Visitor
     - can read from endpoints available to the public;
