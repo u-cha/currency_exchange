@@ -4,6 +4,23 @@ Currency exchange REST API.
 Implements CRUD operations for currencies, currency exchange rates. You can get/post
 currencies/exchange rates. You can convert currencies.
 
+### Launch instructions
+After `git clone`ing the project, you'll need to:
+- create an `.env` file in the root folder (TODO: provide `.example.env`)
+- create a postgres db according to your `.env` credentials
+- launch alembic migrations to populate the database
+
+You can then `uvicorn main:app --reload` and use 
+the API directly with Swagger on your `localhost:8000/docs/`.
+
+There is also frontend support which is currently under development and works like so:
+- launch `launch_local_nginx.sh` script which will start a local NGINX server in a docker container.
+- this script will serve a single page on `localhost:3000` which will make requests to `localhost:8000`
+- You'll need to have your uvicorn serving on `localhost:8000`
+- currently only the `currencies/` endpoint is supported, it just outputs the list of available currencies
+
+
+
 ### Endpoints currently available:  
 
 GET currencies/ - returns a list of available currencies.  
