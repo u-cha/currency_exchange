@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi_users import FastAPIUsers
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -9,7 +9,7 @@ from auth.database import User
 from auth.manager import get_user_manager
 from auth.schemas import UserRead, UserCreate
 
-from currencies.router import currencies_router, currency_router
+from api.currencies.router import currencies_router, currency_router
 
 fastapi_users = FastAPIUsers[User, int](
     get_user_manager,
@@ -29,6 +29,7 @@ origins = [
     "http://localhost:3333",
 ]
 
+# noinspection PyTypeChecker
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
