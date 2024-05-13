@@ -2,6 +2,7 @@ import logging
 
 from fastapi import FastAPI, Depends
 from fastapi_users import FastAPIUsers
+from fastapi.middleware.cors import CORSMiddleware
 
 from auth.auth import auth_backend
 from auth.database import User
@@ -18,10 +19,24 @@ fastapi_users = FastAPIUsers[User, int](
 current_user = fastapi_users.current_user()
 
 logging.basicConfig(
-    level=logging.INFO, format=f"\033[1;91m%(asctime)s - \033[1;33m%(name)s - \033[0m%(levelname)s - %(message)s"
+    level=logging.INFO,
+    format=f"\033[1;91m%(asctime)s - \033[1;33m%(name)s - \033[0m%(levelname)s - %(message)s",
 )
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3333",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(
     fastapi_users.get_auth_router(auth_backend),
     prefix="/auth/jwt",
