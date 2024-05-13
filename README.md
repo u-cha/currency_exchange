@@ -1,4 +1,14 @@
-Currency XChange API
+# Currency XChange API
+
+Currency exchange REST API.
+Implements CRUD operations for currencies, currency exchange rates. You can get/post
+currencies/exchange rates. You can convert currencies.
+
+## Endpoint currently available:
+
+GET currencies/ - returns a list of available currencies.
+GET currency/<currency code> - return concrete currency if it exists.
+POST currencies/ - posts a new currency or returns code 409 if it exists already.
 
 Stack
 =====
@@ -12,6 +22,7 @@ Stack
 
 Minor usage
 ===========
+
 * httpx is used to make requests to third-party resources
 * BeautifulSoup4 is used to extract currency codes from IBAN web page
 
@@ -25,7 +36,7 @@ Role Model
     - can read from endpoints available to clients, i.e:
         - can exchange currencies;
         - can get currency rates;
-* Administator
+* Administrator
     - can do everything Clients can do, plus:
         - update currency rates;
         - add and delete currencies;
