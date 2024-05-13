@@ -6,7 +6,7 @@ currencies/exchange rates. You can convert currencies.
 
 ### Launch instructions
 After `git clone`ing the project, you'll need to:
-- create an `.env` file in the root folder (TODO: provide `.example.env`)
+- create an `.env` file in the root folder (you can use the sample `.example.env`)
 - create a postgres db according to your `.env` credentials
 - launch alembic migrations to populate the database
 
