@@ -5,13 +5,14 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, status, HTTPException, Path
 from pydantic import Field
-from sqlalchemy import select, insert, delete
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import insert, delete
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from api.currencies.models import Currency
+from api.currencies.repository import CurrencyRepository, get_currency_repository
 from database import get_async_session
 from models.models import currency
-from currencies.models import Currency
 
 logger = logging.getLogger(__name__)
 
@@ -20,11 +21,27 @@ currency_router = APIRouter(prefix="/currency", tags=["currency"])
 
 
 @currencies_router.get("/")
-async def get_currencies(session: AsyncSession = Depends(get_async_session)):
+async def get_currencies(repo: CurrencyRepository = Depends(get_currency_repository)):
     logger.info("Retrieving all currencies...")
-    query = select(currency)
-    currencies = await session.execute(query)
-    return currencies.mappings().all()
+    currencies = await repo.get_all_currencies()
+    return currencies
+
+
+@currency_router.get("/{currency_code}")
+async def get_currency(
+    currency_code: Annotated[
+        str, Path(min_length=3, max_length=3, title="Currency Code")
+    ],
+    repo: CurrencyRepository = Depends(get_currency_repository),
+):
+    logger.info(f"Retrieving currency by code {currency_code}")
+    response = await repo.get_currency_by_code(currency_code)
+    if response:
+        return response
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"Currency with code {currency_code} not found",
+    )
 
 
 @currencies_router.post("/", status_code=status.HTTP_201_CREATED)
@@ -63,19 +80,3 @@ async def delete_currency(
             detail=f"Currency with code {code} not found",
         )
     return response
-
-
-@currency_router.get("/{currency_code}")
-async def get_currency(
-    currency_code: Annotated[
-        str, Path(min_length=3, max_length=3, title="Currency Code to look_up")
-    ],
-    session: AsyncSession = Depends(get_async_session),
-):
-    query = select(currency).where(currency.c.code == currency_code)
-    result = await session.execute(query)
-    response = result.mappings().fetchone()
-
-    if response:
-        return response
-    return {"message": f"No currency with code {currency_code}"}
